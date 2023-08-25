@@ -45,7 +45,7 @@
         display: inline-block;
 
         i {
-          font-size: 14px;
+          font-size: 18px;
           margin-right: 2px;
         }
 
