@@ -1,25 +1,13 @@
 <script setup>
 // import HelloWorld from './components/HelloWorld.vue'
 //在jsconfig.json中的配置只是将路径转换了一个别名@,而将别名在转换为实际的路径其实是在vite.config.js文件中
-import HelloWorld from '@/components/HelloWorld.vue';
-import TheWelcome from './components/TheWelcome.vue'
+// import HelloWorld from '@/components/HelloWorld.vue';
+// import TheWelcome from './components/TheWelcome.vue'
+
 </script>
 
 <template>
-  <div>
-    <el-button type="primary">Primary</el-button>
-  </div>
-  <!-- <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main> -->
+  <RouterView />
 </template>
 
 <style scoped>
