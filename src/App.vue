@@ -8,9 +8,16 @@
 
 <template>
   <RouterView />
+  <div class="test">
+    test scss
+  </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+.test {
+  color: $xtxColor;
+}
+
 header {
   line-height: 1.5;
 }
