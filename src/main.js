@@ -11,7 +11,7 @@ import App from './App.vue'
 //测试接口函数
 import { getCategory } from './apis/testAPI'
 getCategory().then(res=>{
-  console.log(res,'res---');
+  // console.log(res,'res---');
 })
 
 const app = createApp(App)
