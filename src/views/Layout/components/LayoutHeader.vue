@@ -1,16 +1,9 @@
 <script setup>
-import { ref } from 'vue';
-import { getCategoryAPI } from '@/apis/layout';
-import { onMounted } from 'vue';
-const categoryList = ref([]);
-const getCategory = async()=>{
-  const {data} = await getCategoryAPI()
-  console.log(data.result);
-  categoryList.value = data.result;
-}
-onMounted(()=>{
-  getCategory()
-})
+//使用pinia中的数据,storeToRefs可以实现pinia中的响应式数据以结构的实行导入
+import { storeToRefs } from 'pinia';
+import { useCategoryStore } from '@/stores/category';
+const {categoryList} = storeToRefs(useCategoryStore())
+
 </script>
 
 <template>
