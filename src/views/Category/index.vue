@@ -4,12 +4,13 @@ import { onMounted, ref } from 'vue';
 // import GoodsItem from '../Home/components/GoodsItem.vue'
 // import { useBanner } from './composables/useBanner'
 // import { useCategory } from './composables/useCategory'
-// const { bannerList } = useBanner()
-// const { categoryData } = useCategory()
+
 
 import { getCategoryAPI } from '@/apis/category.js'
+import { getBannerAPI } from '@/apis/home'
 import { useRoute } from 'vue-router';
 
+//面包屑数据
 const categoryData = ref({});
 const route = useRoute();
 const getCategory = async ()=>{
@@ -17,10 +18,20 @@ const getCategory = async ()=>{
   categoryData.value = res.data.result
 }
 
+//banner栏数据
+const bannerList = ref([])
+const getBanner = async () => {
+  const res = await getBannerAPI({distributionSite:'2'})
+  bannerList.value = res.data.result
+}
+
 onMounted(()=>{
-  console.log('123');
   getCategory()
+  getBanner()
 })
+
+
+ 
 
  
 </script>
@@ -36,14 +47,14 @@ onMounted(()=>{
         </el-breadcrumb>
       </div>
       <!-- 轮播图 -->
-      <!-- <div class="home-banner">
+      <div class="home-banner">
         <el-carousel height="500px">
-          <el-carousel-item v-for="item in []" :key="item.id">
+          <el-carousel-item v-for="item in bannerList" :key="item.id">
             <img :src="item.imgUrl" alt="">
           </el-carousel-item>
         </el-carousel>
       </div>
-      <div class="sub-list">
+      <!-- <div class="sub-list">
         <h3>全部分类</h3>
         <ul>
           <li v-for="i in categoryData.children" :key="i.id">
@@ -53,8 +64,8 @@ onMounted(()=>{
             </RouterLink>
           </li>
         </ul>
-      </div>
-      <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
+      </div> -->
+      <!-- <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
         <div class="head">
           <h3>- {{ item.name }}-</h3>
         </div>
