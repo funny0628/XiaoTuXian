@@ -18,6 +18,9 @@ onMounted(()=>{
   <LayoutFixed/>
   <LayoutNav/>
   <LayoutHeader/>
+  <!-- 破坏分类二级页面的复用机制,强制的销毁重建 -->
+  <!-- 问题:会导致分类二级页面中的所有的请求都重新发送,资源浪费 -->
+  <!-- <router-view :key="$route.fullPath"></router-view> -->
   <router-view></router-view>
   <LayoutFooter/>
 </template>
