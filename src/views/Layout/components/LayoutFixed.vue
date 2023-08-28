@@ -1,4 +1,6 @@
 <script setup>
+import { useScroll } from '@vueuse/core'
+const { y } = useScroll(window)
 import { ref } from 'vue';
 import { getCategoryAPI } from '@/apis/layout';
 import { onMounted } from 'vue';
@@ -14,7 +16,7 @@ onMounted(()=>{
 </script>
 
 <template>
-  <header class='app-header '>
+  <header class='app-header' :class="{show:y>78}">
     <div class="container">
       <h1 class="logo">
         <RouterLink to="/">小兔鲜</RouterLink>
@@ -24,21 +26,38 @@ onMounted(()=>{
           <RouterLink to="/">首页</RouterLink>
         </li>
         <li v-for="(item,index) in categoryList" :key="item.id"> <RouterLink to="/">{{ item.name }}</RouterLink> </li>
+        <li class="home">
+          <RouterLink to="/">|</RouterLink>
+        </li>
+        <li class="home">
+          <RouterLink to="/">品牌</RouterLink>
+        </li>
+        <li class="home">
+          <RouterLink to="/">专题</RouterLink>
+        </li>
       </ul>
-      <div class="search">
-        <i class="iconfont icon-search"></i>
-        <input type="text" placeholder="搜一搜">
-      </div>
-      <!-- 头部购物车 -->
       
     </div>
   </header>
 </template>
 
-
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .app-header {
+  width: 100%;
+  height: 132px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
   background: #fff;
+  border-bottom: 1px solid #e4e4e4;
+  transform: translateY(-100%);
+  opacity: 0;
+  &.show {
+    transition: all 0.3s linear;
+    transform: none;
+    opacity: 1;
+  }
 
   .container {
     display: flex;
@@ -47,7 +66,6 @@ onMounted(()=>{
 
   .logo {
     width: 200px;
-
     a {
       display: block;
       height: 132px;
@@ -58,7 +76,7 @@ onMounted(()=>{
   }
 
   .app-header-nav {
-    width: 820px;
+    width: 1000px;
     display: flex;
     padding-left: 40px;
     position: relative;
@@ -84,55 +102,6 @@ onMounted(()=>{
       .active {
         color: $xtxColor;
         border-bottom: 1px solid $xtxColor;
-      }
-    }
-  }
-
-  .search {
-    width: 170px;
-    height: 32px;
-    position: relative;
-    border-bottom: 1px solid #e7e7e7;
-    line-height: 32px;
-
-    .icon-search {
-      font-size: 18px;
-      margin-left: 5px;
-    }
-
-    input {
-      width: 140px;
-      padding-left: 5px;
-      color: #666;
-    }
-  }
-
-  .cart {
-    width: 50px;
-
-    .curr {
-      height: 32px;
-      line-height: 32px;
-      text-align: center;
-      position: relative;
-      display: block;
-
-      .icon-cart {
-        font-size: 22px;
-      }
-
-      em {
-        font-style: normal;
-        position: absolute;
-        right: 0;
-        top: 0;
-        padding: 1px 6px;
-        line-height: 1;
-        background: $helpColor;
-        color: #fff;
-        font-size: 12px;
-        border-radius: 10px;
-        font-family: Arial;
       }
     }
   }
