@@ -1,7 +1,7 @@
 <script setup>
 //使用pinia中的数据,storeToRefs可以实现pinia中的响应式数据以结构的实行导入
 import { storeToRefs } from 'pinia';
-import { useCategoryStore } from '@/stores/category';
+import { useCategoryStore } from '@/stores/categoryStore';
 const {categoryList} = storeToRefs(useCategoryStore())
 
 </script>
