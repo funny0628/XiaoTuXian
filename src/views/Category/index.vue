@@ -1,54 +1,13 @@
 <script setup>
-
-import { onMounted, ref, watch } from 'vue';
 import GoodsItem from '../Home/components/GoodsItem.vue'
-// import { useBanner } from './composables/useBanner'
-// import { useCategory } from './composables/useCategory'
+import { useBanner } from './composables/useBanner'
+import { useCategory } from './composables/useCategory'
 
-
-import { getCategoryAPI } from '@/apis/category.js'
-import { getBannerAPI } from '@/apis/home'
-import { onBeforeRouteUpdate, useRoute } from 'vue-router';
-
-//面包屑数据
-const categoryData = ref({});
-const route = useRoute();
-const getCategory = async (id = route.params.id)=>{
-  const res = await getCategoryAPI(id);
-  categoryData.value = res.data.result
-}
 
 //banner栏数据
-const bannerList = ref([])
-const getBanner = async () => {
-  const res = await getBannerAPI({distributionSite:'2'})
-  bannerList.value = res.data.result
-}
-
-//1.侦听器检测二级分类切换了更新数据
-// watch(
-//   ()=>route.params.id,
-//   (newValue,oldValue)=>{
-//     getCategory()
-//     console.log('name值改变了')
-//   },
-//   {
-//     immediate:true
-//   }
-// );
-
-//2.侦听器检测二级分类切换了更新数据
-//目标:路由参数变化的时候.可以吧分类数据重新发送请求
-onBeforeRouteUpdate((to,from)=>{
-  console.log('拜年话了',to,from);
-  getCategory(to.params.id)
-})
-
-onMounted(()=>{
-  getBanner()
-  getCategory()
-})
-
+const { bannerList } = useBanner()
+//面包屑数据
+const { categoryData } = useCategory();
 
 </script>
  
