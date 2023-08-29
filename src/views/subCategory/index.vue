@@ -1,16 +1,16 @@
 <script setup>
-// import { getCategoryFilterAPI, getSubCategoryAPI } from '@/apis/category'
+import { getCategoryFilterAPI,  } from '@/apis/category'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 // import GoodsItem from '../Home/components/GoodsItem.vue'
 // // 获取面包屑导航数据
 const categoryData = ref({})
 const route = useRoute()
-// const getCategoryData = async () => {
-//   const res = await getCategoryFilterAPI(route.params.id)
-//   categoryData.value = res.result
-// }
-// onMounted(() => getCategoryData())
+const getCategoryData = async () => {
+  const res = await getCategoryFilterAPI(route.params.id)
+  categoryData.value = res.data.result
+}
+onMounted(() => getCategoryData())
  
 // // 获取基础列表数据渲染
 const goodList = ref([])
