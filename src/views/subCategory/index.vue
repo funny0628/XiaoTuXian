@@ -1,8 +1,8 @@
 <script setup>
-import { getCategoryFilterAPI,  } from '@/apis/category'
+import { getCategoryFilterAPI, getSubCategoryAPI } from '@/apis/category'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-// import GoodsItem from '../Home/components/GoodsItem.vue'
+import GoodsItem from '../Home/components/GoodsItem.vue'
 // // 获取面包屑导航数据
 const categoryData = ref({})
 const route = useRoute()
@@ -20,12 +20,12 @@ const reqData = ref({
   pageSize: 20,
   sortField: 'publishTime'
 })
-// const getGoodList = async () => {
-//   const res = await getSubCategoryAPI(reqData.value)
-//   console.log(res)
-//   goodList.value = res.result.items
-// }
-// onMounted(() => getGoodList())
+const getGoodList = async () => {
+  const res = await getSubCategoryAPI(reqData.value)
+  console.log(res)
+  goodList.value = res.data.result.items
+}
+onMounted(() => getGoodList())
  
  
 // // tab切换回调
