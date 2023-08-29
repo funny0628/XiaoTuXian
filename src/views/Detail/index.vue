@@ -1,6 +1,6 @@
 <script setup>
 // import DetailHot from './components/DetailHot.vue'
-// import { getDetail } from '@/apis/detail'
+import { getDetail } from '@/apis/detail'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
@@ -8,11 +8,11 @@ import { ElMessage } from 'element-plus'
 // const cartStore = useCartStore()
 const goods = ref({})
 const route = useRoute()
-// const getGoods = async () => {
-//   const res = await getDetail(route.params.id)
-//   goods.value = res.result
-// }
-// onMounted(() => getGoods())
+const getGoods = async () => {
+  const res = await getDetail(route.params.id)
+  goods.value = res.data.result
+}
+onMounted(() => getGoods())
  
 // sku规格被操作时
 let skuObj = {}
@@ -52,10 +52,8 @@ const addCart = () => {
  
 <template>
   <div class="xtx-goods-page">
-    33333333
     <div class="container" v-if="goods.details">
       <div class="bread-container">
-        1312
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <!-- 
@@ -155,7 +153,7 @@ const addCart = () => {
                     </li>
                   </ul>
                   <!-- 图片 -->
-                  <img v-for="img in goods.details.pictures" :src="img" :key="img" alt="">
+                  <img v-for="img in goods.details.pictures" v-img-lazy="img" :key="img" alt="">
                 </div>
               </div>
             </div>
