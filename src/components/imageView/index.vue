@@ -68,8 +68,8 @@ watch([elementX, elementY, isOutside], () => {
   if (elementY.value < subSmalHeight.value) { top.value = 0 }
  
   // 控制大图的显示
-  positionX.value = -left.value * 2
-  positionY.value = -top.value * 2
+  positionX.value = -left.value * (target.value.offsetWidth / layer.value.offsetWidth)
+  positionY.value = -top.value * (target.value.offsetHeight / layer.value.offsetHeight)
  
 })
  
