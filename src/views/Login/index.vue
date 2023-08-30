@@ -8,6 +8,7 @@ import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 import { useRouter } from 'vue-router'
+import { loginAPI } from '@/apis/login'
  
 // import { useUserStore } from '@/stores/userStore'
  
@@ -49,7 +50,6 @@ const rules = {
 const formRef = ref(null)
 const router = useRouter()
 const doLogin = () => {
-  return false;
   const { account, password } = form.value
   // 调用实例方法
   formRef.value.validate(async (valid) => {
@@ -58,11 +58,15 @@ const doLogin = () => {
     // 以valid做为判断条件 如果通过校验才执行登录逻辑
     if (valid) {
       // TODO LOGIN
-      await userStore.getUserInfo({ account, password })
-      // 1. 提示用户
-      ElMessage({ type: 'success', message: '登录成功' })
-      // 2. 跳转首页
-      router.replace({ path: '/' })
+      // await userStore.getUserInfo({ account, password })
+      const res = await loginAPI({ account, password });
+      console.log(res);
+      if(res.data.code == 1){
+        // 1. 提示用户
+        ElMessage({ type: 'success', message: '登录成功' })
+        // 2. 跳转首页
+        router.replace({ path: '/' })
+      }
     }
   })
 }

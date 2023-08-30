@@ -1,4 +1,7 @@
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+
 const httpInstance = axios.create({
   baseURL:'http://pcapi-xiaotuxian-front-devtest.itheima.net',
   timeout:5000,
@@ -22,6 +25,10 @@ httpInstance.interceptors.response.use(response => {
 }, error => {
   // 超出 2xx 范围的状态码都会触发该函数。
   // 对响应错误做点什么
+  ElMessage({
+    type:'warning',
+    message:error.response.data.msg
+  })
   return Promise.reject(error);
 })
 
