@@ -1,8 +1,12 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref,computed } from "vue";
 
 export const useCartStore = defineStore('cart',()=>{
   const cartList = ref([]);
+
+  //计算属性
+  const allCount = computed(()=>cartList.value.reduce((prev,item)=> prev + item.count,0))
+  const allPrice = computed(()=>cartList.value.reduce((prev,item)=> prev + (item.count * (+item.price)),0))
 
   //添加购物车函数
   const addCart = (goods)=>{
@@ -22,6 +26,8 @@ export const useCartStore = defineStore('cart',()=>{
   }
   return {
     cartList,
+    allCount,
+    allPrice,
     addCart,
     delCart
   }

@@ -1,7 +1,6 @@
 <script setup>
 import { useCartStore } from '@/stores/cartStore'
 const cartStore = useCartStore()
-console.log(cartStore,cartStore.cartList);
  
 </script>
  
@@ -34,8 +33,7 @@ console.log(cartStore,cartStore.cartList);
       <div class="foot">
         <div class="total">
           <p>共 {{ cartStore.allCount }} 件商品</p>
-          <!-- <p>¥ {{ cartStore.allPrice.toFixed(2) }} </p> -->
-          <p>¥ {{ cartStore.allPrice }} </p>
+          <p>¥ {{ cartStore.allPrice.toFixed(2) }} </p>
         </div>
         <el-button size="large" type="primary" @click="$router.push('/cartlist')">去购物车结算</el-button>
       </div>
