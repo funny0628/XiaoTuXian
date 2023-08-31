@@ -1,9 +1,16 @@
 <script setup>
 import { useUserStore } from "@/stores/userStore";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 
 const userStore = useUserStore();
 const {userInfo} = storeToRefs(userStore)
+const router = useRouter()
+
+const confirm = ()=>{
+  userStore.clearUserInfor();
+  router.replace('/')
+}
 
 </script>
 
@@ -14,7 +21,7 @@ const {userInfo} = storeToRefs(userStore)
         <template v-if="userInfo.token">
           <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{ userInfo.nickname }}</a></li>
           <li>
-            <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
+            <el-popconfirm @confirm="confirm" title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
               <template #reference>
                 <a href="javascript:;">退出登录</a>
               </template>
