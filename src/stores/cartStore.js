@@ -10,6 +10,10 @@ export const useCartStore = defineStore('cart',()=>{
   const allPrice = computed(()=>cartList.value.reduce((prev,item)=> prev + (item.count * (+item.price)),0))
   //计算属性-是否全部选中
   const isAll = computed(()=>cartList.value.every((item)=>item.selected))
+  //计算属性-已选中商品的个数
+  const selectedCount = computed(()=>cartList.value.filter(item=>item.selected).reduce((prev,item)=> prev + item.count,0)) 
+   //计算属性-已选中商品价钱总数
+  const selectedPrice = computed(()=>cartList.value.filter(item=>item.selected).reduce((prev,item)=> prev + (item.count * (+item.price)),0)) 
 
   //添加购物车函数
   const addCart = (goods)=>{
@@ -43,6 +47,8 @@ export const useCartStore = defineStore('cart',()=>{
     allCount,
     allPrice,
     isAll,
+    selectedCount,
+    selectedPrice,
     addCart,
     delCart,
     singleCheck,
