@@ -18,3 +18,14 @@ export const getCartListAPI = ()=>{
     url:'/member/cart',
   })
 }
+
+//删除购物车数据
+export const delCartAPI = (ids)=>{
+  return httpInstance({
+    url:'/member/cart',
+    method:'DELETE',
+    data:{
+      ids
+    }
+  })
+}
