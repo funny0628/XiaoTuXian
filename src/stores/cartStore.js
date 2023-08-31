@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import { ref,computed } from "vue";
+import { useUserStore } from "./userStore";
+import { addCartAPI,getCartListAPI } from "@/apis/cart";
 
 export const useCartStore = defineStore('cart',()=>{
   const cartList = ref([]);
@@ -15,16 +17,25 @@ export const useCartStore = defineStore('cart',()=>{
    //计算属性-已选中商品价钱总数
   const selectedPrice = computed(()=>cartList.value.filter(item=>item.selected).reduce((prev,item)=> prev + (item.count * (+item.price)),0)) 
 
+  //计算属性-是否登录状态
+  const isLogin = computed(()=>useUserStore.userInfo.token)
+
   //添加购物车函数
-  const addCart = (goods)=>{
-    //拿到商品数据判断,该商品是否已经存在
-    //1.存在,数量加1
-    //2.不存在,就添加到购物车数据中
-    const item = cartList.value.findLast((item)=>item.skuId == goods.skuId)
-    if(item){
-      item.count++
+  const addCart = async (goods)=>{
+    if(isLogin){
+      await addCartAPI({skuId:goods.skuId,count:goods.count})
+      const res = await getCartListAPI();
+      cartList.value = res.data.result;
     }else{
-      cartList.value.push(goods)
+      //拿到商品数据判断,该商品是否已经存在
+      //1.存在,数量加1
+      //2.不存在,就添加到购物车数据中
+      const item = cartList.value.findLast((item)=>item.skuId == goods.skuId)
+      if(item){
+        item.count++
+      }else{
+        cartList.value.push(goods)
+      }
     }
   }
   //删除购物车数据
