@@ -2,7 +2,7 @@ import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 import { useUserStore } from '@/stores/userStore'
-
+import router from '@/router'
 
 
 const httpInstance = axios.create({
@@ -31,12 +31,21 @@ httpInstance.interceptors.response.use(response => {
   // 对响应数据做点什么
   return response;
 }, error => {
+  const userStore = useUserStore();
   // 超出 2xx 范围的状态码都会触发该函数。
   // 对响应错误做点什么
+  //统一的错误处理
   ElMessage({
     type:'warning',
     message:error.response.data.msg
   })
+  //401 token失效处理
+  //1.清除本地的user数据
+  //2.跳转到登录页面
+  if(error.response.status === 401){
+    userStore.clearUserInfor();
+    router.push('/login')
+  }
   return Promise.reject(error);
 })
 
