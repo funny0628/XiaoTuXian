@@ -18,7 +18,8 @@ export const useCartStore = defineStore('cart',()=>{
   const selectedPrice = computed(()=>cartList.value.filter(item=>item.selected).reduce((prev,item)=> prev + (item.count * (+item.price)),0)) 
 
   //计算属性-是否登录状态
-  const isLogin = computed(()=>useUserStore.userInfo.token)
+  const userStore = useUserStore();
+  const isLogin = computed(()=>userStore.userInfo.token)
 
   //获取最新的购物车列表
   const updateCartLIst = async()=>{
@@ -27,7 +28,7 @@ export const useCartStore = defineStore('cart',()=>{
   }
   //添加购物车函数
   const addCart = async (goods)=>{
-    if(isLogin){
+    if(isLogin.value){
       const {skuId,count} = goods
       await addCartAPI({skuId,count})
       updateCartLIst()
@@ -45,7 +46,7 @@ export const useCartStore = defineStore('cart',()=>{
   }
   //删除购物车数据
   const delCart = async (skuId)=>{
-    if(isLogin){
+    if(isLogin.value){
       await delCartAPI([skuId])
       updateCartLIst()
     }else{
@@ -63,6 +64,12 @@ export const useCartStore = defineStore('cart',()=>{
   const allCheck = (selected)=>{
     cartList.value.forEach((item)=>item.selected = selected )
   }
+
+  //清除购物车数据
+  const clearCartList = ()=>{
+    cartList.value = []
+  }
+
   return {
     cartList,
     allCount,
@@ -73,7 +80,9 @@ export const useCartStore = defineStore('cart',()=>{
     addCart,
     delCart,
     singleCheck,
-    allCheck
+    allCheck,
+    clearCartList,
+    updateCartLIst
   }
 },{
   persist: true,
