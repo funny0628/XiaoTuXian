@@ -4,9 +4,12 @@ import { ref,computed } from "vue";
 export const useCartStore = defineStore('cart',()=>{
   const cartList = ref([]);
 
-  //计算属性
+  //计算属性-商品个数
   const allCount = computed(()=>cartList.value.reduce((prev,item)=> prev + item.count,0))
+  //计算属性-所有商品价格
   const allPrice = computed(()=>cartList.value.reduce((prev,item)=> prev + (item.count * (+item.price)),0))
+  //计算属性-是否全部选中
+  const isAll = computed(()=>cartList.value.every((item)=>item.selected))
 
   //添加购物车函数
   const addCart = (goods)=>{
@@ -24,12 +27,26 @@ export const useCartStore = defineStore('cart',()=>{
   const delCart = (skuId)=>{
     cartList.value = cartList.value.filter(item=>item.skuId !== skuId)
   }
+  //单选控制购物车商品
+  const singleCheck = (skuId, selected)=>{
+    const item = cartList.value.find(item=>item.skuId == skuId)
+    item.selected = selected
+    //开关思想-假设全部已经选中
+
+  }
+  //全选控制购物车商品选中状态
+  const allCheck = (selected)=>{
+    cartList.value.forEach((item)=>item.selected = selected )
+  }
   return {
     cartList,
     allCount,
     allPrice,
+    isAll,
     addCart,
-    delCart
+    delCart,
+    singleCheck,
+    allCheck
   }
 },{
   persist: true,
