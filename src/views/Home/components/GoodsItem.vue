@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
   goods: {
-    tppe: Object,
+    type: Object,
     default: () => { }
   }
 })
