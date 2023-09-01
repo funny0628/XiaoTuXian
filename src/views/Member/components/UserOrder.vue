@@ -1,4 +1,7 @@
 <script setup>
+import { getUserOrderAPI } from '@/apis/member'
+import { onMounted, ref } from 'vue';
+
 // tab列表
 const tabTypes = [
   { name: "all", label: "全部订单" },
@@ -9,8 +12,21 @@ const tabTypes = [
   { name: "complete", label: "已完成" },
   { name: "cancel", label: "已取消" }
 ]
+
 // 订单列表
-const orderList = []
+const orderList = ref([])
+const counts = ref(0);//总条数
+
+const getlist = async()=>{
+  const res = await getUserOrderAPI({
+    orderState:0,
+    page:1,
+    pageSize:2
+  });
+  console.log(res.data.result);
+  orderList.value = res.data.result.items
+}
+onMounted(()=>getlist())
 
 </script>
 
@@ -94,7 +110,7 @@ const orderList = []
           </div>
           <!-- 分页 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <el-pagination background layout="prev, pager, next" :total="counts" :page-sizes="[10, 20, 30, 40]"/>
           </div>
         </div>
       </div>
