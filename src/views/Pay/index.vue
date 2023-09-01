@@ -1,16 +1,16 @@
 <script setup>
 import { getOrderAPI } from '@/apis/pay'
 import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute,useRouter } from 'vue-router'
 // import { useCountDown } from '@/composables/useCountDown'
 // const { formatTime, start } = useCountDown()
 // 获取订单数据
 const route = useRoute()
+const router = useRouter()
 const payInfo = ref({})
 const getPayInfo = async () => {
   const res = await getOrderAPI(route.query.id)
   payInfo.value = res.data.result
-  console.log(payInfo.value,'payInfo.value----');
   // 初始化倒计时秒数
   // start(res.result.countdown)
 }
@@ -23,11 +23,17 @@ const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
 const backURL = 'http://127.0.0.1:5173/paycallback'
 const redirectUrl = encodeURIComponent(backURL)
 const payUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redirectUrl}`
-
+const callback = `${backURL}?payResult=true&orderId=1697509267847778305`
+//1627949044007440386
 /**
  * 跳转页面的支付账号:jfjbwb4477@sandbox.com
  * 跳转页面的支付密码:111111
  */
+
+const callbackfn = ()=>{
+  router.push(callback)
+}
+
 </script>
  
  
@@ -62,6 +68,8 @@ const payUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redire
           <a class="btn" href="javascript:;">农业银行</a>
           <a class="btn" href="javascript:;">交通银行</a>
         </div>
+        <!-- 测试数据已经完成的订单数据跳转回到项目定义的确认页面 -->
+        <el-button @click="callbackfn" type="primary" size="large">跳转确认页</el-button>
       </div>
     </div>
   </div>
