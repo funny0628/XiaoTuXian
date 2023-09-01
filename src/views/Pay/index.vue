@@ -23,6 +23,11 @@ const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
 const backURL = 'http://127.0.0.1:5173/paycallback'
 const redirectUrl = encodeURIComponent(backURL)
 const payUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redirectUrl}`
+
+/**
+ * 跳转页面的支付账号:jfjbwb4477@sandbox.com
+ * 跳转页面的支付密码:111111
+ */
 </script>
  
  
