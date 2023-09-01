@@ -15,7 +15,7 @@ const tabTypes = [
 
 // 订单列表
 const orderList = ref([])
-const counts = ref(0);//总条数
+const total = ref(0);//总条数
 const params = ref({
     orderState:0,
     page:1,
@@ -24,13 +24,21 @@ const params = ref({
 
 const getlist = async()=>{
   const res = await getUserOrderAPI(params.value);
-  orderList.value = res.data.result.items
+  orderList.value = res.data.result.items.concat(res.data.result.items)
+  total.value = res.data.result.counts
+  console.log(total.value);
 }
 onMounted(()=>getlist())
 
+//tab切换
 const tabChange = (type)=>{
   params.value.orderState = type;
   getlist()
+}
+
+//页数切换
+const currentChange = (value)=>{
+  console.log(value);
 }
 </script>
 
@@ -77,7 +85,7 @@ const tabChange = (type)=>{
                 </ul>
               </div>
               <div class="column state">
-                <p>{{ order.orderState }}</p>
+                <p>{{ tabTypes[order.orderState].label  }}</p>
                 <p v-if="order.orderState === 3">
                   <a href="javascript:;" class="green">查看物流</a>
                 </p>
@@ -114,7 +122,11 @@ const tabChange = (type)=>{
           </div>
           <!-- 分页 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" :total="counts" :page-sizes="[10, 20, 30, 40]"/>
+            <el-pagination background layout="prev, pager, next" 
+            :total="total" 
+            :page-sizes="params.pageSize"
+            @current-change="currentChange"
+            />
           </div>
         </div>
       </div>
