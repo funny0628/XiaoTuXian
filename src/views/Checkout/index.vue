@@ -1,5 +1,5 @@
 <script setup>
-import { getCheckInfoAPI,addAddressAPI } from '@/apis/checkout'
+import { getCheckInfoAPI,createOrderAPI,addAddressAPI } from '@/apis/checkout'
 import { useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import { useCartStore } from '@/stores/cartStore'
@@ -36,30 +36,31 @@ const confirm = () => {
 }
  
 // 创建订单
-// const createOrder = async () => {
-//   const res = await createOrderAPI({
-//     deliveryTimeType: 1,
-//     payType: 1,
-//     payChannel: 1,
-//     buyerMessage: '',
-//     goods: checkInfo.value.goods.map(item => {
-//       return {
-//         skuId: item.skuId,
-//         count: item.count
-//       }
-//     }),
-//     addressId: curAddress.value.id
-//   })
-//   const orderId = res.data.result.id
-//   router.push({
-//     path: '/pay',
-//     query: {
-//       id: orderId
-//     }
-//   })
-//   // 更新购物车
-//   cartStore.updateNewList()
-// }
+const createOrder = async () => {
+  const res = await createOrderAPI({
+    deliveryTimeType: 1,
+    payType: 1,
+    payChannel: 1,
+    buyerMessage: '',
+    goods: checkInfo.value.goods.map(item => {
+      return {
+        skuId: item.skuId,
+        count: item.count
+      }
+    }),
+    addressId: '1585486792537149441'
+    // addressId: curAddress.value.id
+  })
+  const orderId = res.data.result.id
+  router.push({
+    path: '/pay',
+    query: {
+      id: orderId
+    }
+  })
+  // 更新购物车
+  cartStore.updateNewList()
+}
  
 </script>
  
