@@ -59,7 +59,7 @@ const createOrder = async () => {
     }
   })
   // 更新购物车
-  cartStore.updateNewList()
+  cartStore.updateCartLIst()
 }
  
 </script>

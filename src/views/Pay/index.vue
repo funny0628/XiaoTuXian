@@ -20,20 +20,12 @@ onMounted(() => getPayInfo())
 // 携带订单id以及回调地址跳转到支付地址（get）
 // 支付地址
 const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
-const backURL = 'http://127.0.0.1:5173/paycallback'
+const backURL = 'http://localhost:5173/paycallback'
 const redirectUrl = encodeURIComponent(backURL)
 const payUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redirectUrl}`
-const callback = `${backURL}?payResult=true&orderId=1697509267847778305`
-//1627949044007440386
-/**
- * 跳转页面的支付账号:jfjbwb4477@sandbox.com
- * 跳转页面的支付密码:111111
- */
 
-const callbackfn = ()=>{
-  router.push(callback)
-}
-
+//支付账户：askgxl8276@sandbox.com
+//支付密码：111111
 </script>
  
  
@@ -68,8 +60,6 @@ const callbackfn = ()=>{
           <a class="btn" href="javascript:;">农业银行</a>
           <a class="btn" href="javascript:;">交通银行</a>
         </div>
-        <!-- 测试数据已经完成的订单数据跳转回到项目定义的确认页面 -->
-        <el-button @click="callbackfn" type="primary" size="large">跳转确认页</el-button>
       </div>
     </div>
   </div>
