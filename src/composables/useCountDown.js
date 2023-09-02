@@ -10,12 +10,12 @@ export const useCountDown = ()=>{
   //开启倒计时
   const start = (currentTime)=>{
     time.value = currentTime
-    timeId = setInterval(() => {
+    timeId.value = setInterval(() => {
       time.value--
     }, 1000);
   }
   onUnmounted(()=>{
-    clearInterval(timeId)
+    clearInterval(timeId.value)
   })
   return {
     formatTime,
